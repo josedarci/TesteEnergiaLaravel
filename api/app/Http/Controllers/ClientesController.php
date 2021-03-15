@@ -61,7 +61,28 @@ class ClientesController extends Controller
 
     public function delete(Cliente $cliente)
     {
-        $cliente->delete();
-        return response()->json(['success'=>true]);
+        if($cliente->estado != 'São Paulo')
+        {
+            $cliente->delete();
+            return response()->json(['success'=>true]);
+        }else {
+
+        }
+
+        try {
+            if($cliente->estado != 'São Paulo')
+            {
+                $cliente->delete();
+                return response()->json(['msg'=>'Cliente removido com sucesso!'],200);
+            } else {
+                return response()->json(['msg'=>'Não é possivel remover um cliente de São Paulo!'],400);
+            }
+
+
+        }catch (\Exception $e){
+
+            return response()->json(['error'=> $e->getMessage()]);
+        }
+
     }
 }
